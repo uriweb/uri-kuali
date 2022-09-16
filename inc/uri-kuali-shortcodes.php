@@ -19,7 +19,11 @@
  		'after' => '</div>',
  	), $attributes, $shortcode );
 
- 	return "You passed the subject " . $attributes[ 'subject' ];
+ 	$results = uri_kuali_api_get_subject( $attributes['subject'] );
+
+  var_dump( $results );
+
+  return false;
 
  }
  add_shortcode( 'courses', 'uri_kuali_shortcode' );

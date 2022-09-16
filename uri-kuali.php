@@ -15,5 +15,11 @@ if ( !defined('ABSPATH') )
 
 define( 'URI_KUALI_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
+// Include settings
+include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-settings.php' );
+
 // Include shortcodes
 include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-shortcodes.php' );
+
+// Include api
+include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-api.php' );
