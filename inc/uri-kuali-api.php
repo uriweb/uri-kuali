@@ -6,6 +6,9 @@
  */
 
 
+/**
+ * Return the API header
+ */
 function uri_kuali_api_get_header() {
 
   $client_id = get_option( 'uri_kuali_client_id' );
@@ -26,15 +29,9 @@ function uri_kuali_api_get_header() {
 }
 
 /**
- * Get subject by name
+ * Call the API
  */
-function uri_kuali_api_get_subject( $subject ) {
-
-  $api_base = get_option( 'uri_kuali_url' );
-  $args = uri_kuali_api_get_header();
-
-  // @todo $subject should be sanitized somehow
-  $url = $api_base . '/cm/options/types/subjectcodes?name=' . $subject;
+function uri_kuali_api_call( $url, $args ) {
 
   $response = wp_safe_remote_get( $url, $args );
 
@@ -59,5 +56,30 @@ function uri_kuali_api_get_subject( $subject ) {
 		echo "Empty response from server?";
 		return FALSE;
 	}
+
+}
+
+/**
+ * Get course subject data by three-letter course code
+ */
+function uri_kuali_api_get_subject_data( $subject ) {
+
+  $api_base = get_option( 'uri_kuali_url' );
+  $args = uri_kuali_api_get_header();
+
+  // @todo $subject should be sanitized somehow
+  $url = $api_base . '/cm/options/types/subjectcodes?name=' . $subject;
+
+  return uri_kuali_api_call( $url, $args );
+
+}
+
+/**
+ * Get the course subject id
+ */
+function uri_kuali_api_get_subject_id( $subject ) {
+
+  $data = uri_kuali_api_get_subject_data( $subject );
+  return reset( $data )->id;
 
 }

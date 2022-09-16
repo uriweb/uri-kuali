@@ -19,9 +19,9 @@
  		'after' => '</div>',
  	), $attributes, $shortcode );
 
- 	$results = uri_kuali_api_get_subject( $attributes['subject'] );
+ 	$subject_id = uri_kuali_api_get_subject_id( $attributes['subject'] );
 
-  var_dump( $results );
+  var_dump( $subject_id );
 
   return false;
 
