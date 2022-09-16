@@ -21,7 +21,9 @@
 
  	$subject_id = uri_kuali_api_get_subject_id( $attributes['subject'] );
 
-  var_dump( $subject_id );
+  $course_list = uri_kuali_api_get_courses( $subject_id );
+
+  var_dump( $course_list );
 
   return false;
 
