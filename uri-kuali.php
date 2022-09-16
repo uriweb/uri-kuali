@@ -12,3 +12,8 @@ Author URI:
 // Block direct requests
 if ( !defined('ABSPATH') )
 	die('-1');
+
+define( 'URI_KUALI_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+// Include shortcodes
+include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-shortcodes.php' );
