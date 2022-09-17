@@ -23,3 +23,6 @@ include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-shortcodes.php' );
 
 // Include api
 include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-api.php' );
+
+// Include helper functions
+include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-helpers.php' );
