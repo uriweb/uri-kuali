@@ -15,6 +15,14 @@ if ( !defined('ABSPATH') )
 
 define( 'URI_KUALI_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
+/**
+ * Add some generic styles
+ */
+function uri_kuali_enqueue() {
+	wp_enqueue_style( 'uri-kuali-styles', plugins_url( 'css/uri-kuali.css', __FILE__ ) );
+}
+add_action( 'wp_enqueue_scripts', 'uri_kuali_enqueue' );
+
 // Include settings
 include( URI_KUALI_DIR_PATH . 'inc/uri-kuali-settings.php' );
 
