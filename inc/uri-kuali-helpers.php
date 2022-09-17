@@ -12,15 +12,11 @@
  * @return str HTML list of courses
  */
 function uri_kuali_render_course_list( $courses, $attributes ) {
-	if ( ! is_array ( $courses ) ) {
-		// courses isn't an array...
-		return '<p class="error">I couldn’t find courses matching <kbd>' . $attributes['subject'] . '</kbd>.</p>';
-	}
 
   // Get shortcode template file
   // Priority:
-  // 1. /themes/theme/template-parts/cl/cl-template-*.php
-  // 2. /plugins/uri-component-library/templates/cl-template-*.php
+  // 1. /themes/{theme-name}/template-parts/uri-kuali-course.php
+  // 2. /plugins/uri-kuali/inc/uri-kuali-template.php
   $template = get_stylesheet_directory() . '/template-parts/uri-kuali-course.php';
 
 	if ( ! is_file( $template ) ) {
@@ -45,9 +41,12 @@ function uri_kuali_render_course_list( $courses, $attributes ) {
 }
 
 /**
- * No results message
+ * Render a message if there are no results
+ * @param arr attributes
+ * @return str HTML message
  */
 function uri_kuali_render_no_results( $attributes ) {
+
   ob_start();
 
   print $attributes['before'];
@@ -61,4 +60,5 @@ function uri_kuali_render_no_results( $attributes ) {
   print $attributes['after'];
 
   return ob_get_clean();
+
 }

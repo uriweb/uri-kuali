@@ -2,6 +2,11 @@
 /**
  * URI KUALI TEMPLATE
  *
+ * The plugin will look for this template in the theme first:
+ * /themes/{theme-name}/template-parts/uri-kuali-course.php
+ *
+ * If the theme does not supply a template, we'll default to this one
+ *
  * @package uri-kuali
  */
 
