@@ -14,9 +14,10 @@
 
  	// default attributes
  	$attributes = shortcode_atts( array(
- 		'subject' => 'AAF', // slug, slug2, slug3
+ 		'subject' => 'AAF',
  		'before' => '<div class="uri-kuali">',
  		'after' => '</div>',
+    'limit' => 200,
  	), $attributes, $shortcode );
 
  	$subject_id = uri_kuali_api_get_subject_id( $attributes['subject'] );
@@ -25,7 +26,7 @@
     return uri_kuali_render_no_results( $attributes );
   }
 
-  $course_list = uri_kuali_api_get_courses( $subject_id );
+  $course_list = uri_kuali_api_get_courses( $subject_id, $attributes );
 
   $output = uri_kuali_render_course_list( $course_list->res, $attributes );
 

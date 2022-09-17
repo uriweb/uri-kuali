@@ -87,12 +87,12 @@ function uri_kuali_api_get_subject_id( $subject ) {
 /**
  * Get the course list by subject id
  */
-function uri_kuali_api_get_courses( $id ) {
+function uri_kuali_api_get_courses( $id, $atts ) {
 
   $api_base = get_option( 'uri_kuali_url' );
   $args = uri_kuali_api_get_header();
 
-  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number';
+  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'];
 
   return uri_kuali_api_call( $url, $args );
 
