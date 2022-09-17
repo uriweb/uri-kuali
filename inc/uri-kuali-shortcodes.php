@@ -21,6 +21,10 @@
 
  	$subject_id = uri_kuali_api_get_subject_id( $attributes['subject'] );
 
+  if ( null === $subject_id ) {
+    return uri_kuali_render_no_results( $attributes );
+  }
+
   $course_list = uri_kuali_api_get_courses( $subject_id );
 
   $output = uri_kuali_render_course_list( $course_list->res, $attributes );

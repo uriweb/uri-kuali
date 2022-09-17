@@ -43,3 +43,22 @@ function uri_kuali_render_course_list( $courses, $attributes ) {
 	return $output;
 
 }
+
+/**
+ * No results message
+ */
+function uri_kuali_render_no_results( $attributes ) {
+  ob_start();
+
+  print $attributes['before'];
+
+  ?>
+
+  <div class="uri-kuali-no-results">There are no courses matching this subject.</div>
+
+  <?php
+
+  print $attributes['after'];
+
+  return ob_get_clean();
+}
