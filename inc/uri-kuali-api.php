@@ -60,27 +60,41 @@ function uri_kuali_api_call( $url, $args ) {
 }
 
 /**
+ * Get data from either the cache or api, depending on what's fresher
+ * @param str $url the url
+ */
+function uri_kuali_get_data( $url ) {
+
+  $cache = uri_kuali_cache_retrieve( $url );
+
+  //var_dump( $cache );
+
+  // if we have a good cache, use it
+  if ( $cache ) {
+    echo '<br />using cache for ' . uri_kuali_hash_string( $url );
+    return $cache;
+  }
+
+  // otherwise, call the api, cache it, and return the data
+  echo '<br />no cache for ' . uri_kuali_hash_string( $url );
+  echo '<br />calling api...';
+  $data = uri_kuali_api_call( $url, uri_kuali_api_get_header() );
+  uri_kuali_cache_update( $url, $data );
+  return $data;
+
+}
+
+/**
  * Get course subject data by three-letter course code
  */
 function uri_kuali_api_get_subject_data( $subject ) {
 
   $api_base = get_option( 'uri_kuali_url' );
-  $args = uri_kuali_api_get_header();
 
   // @todo $subject should be sanitized somehow
   $url = $api_base . '/cm/options/types/subjectcodes?name=' . $subject;
 
-  return uri_kuali_api_call( $url, $args );
-
-}
-
-/**
- * Get the course subject id
- */
-function uri_kuali_api_get_subject_id( $subject ) {
-
-  $data = uri_kuali_api_get_subject_data( $subject );
-  return reset( $data )->id;
+  return uri_kuali_get_data( $url );
 
 }
 
@@ -90,10 +104,8 @@ function uri_kuali_api_get_subject_id( $subject ) {
 function uri_kuali_api_get_courses( $id, $atts ) {
 
   $api_base = get_option( 'uri_kuali_url' );
-  $args = uri_kuali_api_get_header();
-
   $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'];
 
-  return uri_kuali_api_call( $url, $args );
+  return uri_kuali_get_data( $url );
 
 }

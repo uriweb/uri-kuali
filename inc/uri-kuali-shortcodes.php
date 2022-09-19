@@ -20,7 +20,8 @@
     'limit' => 200,
  	), $attributes, $shortcode );
 
- 	$subject_id = uri_kuali_api_get_subject_id( $attributes['subject'] );
+ 	$subject_data = uri_kuali_api_get_subject_data( $attributes['subject'] );
+  $subject_id = $subject_data[0]->id;
 
   if ( null === $subject_id ) {
     return uri_kuali_render_no_results( $attributes );

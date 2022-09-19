@@ -62,3 +62,27 @@ function uri_kuali_render_no_results( $attributes ) {
   return ob_get_clean();
 
 }
+
+/**
+ * hash a string; currently md5, someday something else.
+ * @param str $string the string to hash
+ * @return str
+ */
+function uri_kuali_hash_string ( $string ) {
+  $hash = md5( $string );
+  return $hash;
+}
+
+/**
+ * check if a date has recency
+ * @param int date
+ * @return bool
+ */
+function uri_kuali_cache_is_expired( $date ) {
+
+	$recency = get_option( 'uri_kuali_recency', '1 day' );
+	$expiry = strtotime( '-' . $recency, strtotime('now') );
+
+	return ( $date < $expiry );
+
+}
