@@ -25,7 +25,7 @@ function uri_kuali_cache_update( $url, $kuali_data ) {
 
   $data[$hash] = $cache;
   update_option( 'uri_kuali_cache', $data, TRUE );
-  echo '<br/> cache updated for ' . $hash;
+  //echo '<br/> cache updated for ' . $hash;
 
   //var_dump($data);
 
@@ -41,20 +41,20 @@ function uri_kuali_cache_retrieve( $url ) {
 
   if ( array_key_exists( $hash, $data ) ) {
 
-    echo '<br />cache exists for ' . $hash;
+    //echo '<br />cache exists for ' . $hash;
     $cache = $data[$hash];
 
     if ( uri_kuali_cache_is_expired( $cache['date'] ) ) {
-      echo '<br />cache is expired for ' . $hash;
+      //echo '<br />cache is expired for ' . $hash;
       return false;
     }
 
-    echo '<br />using cache for ' . $hash;
+    //echo '<br />using cache for ' . $hash;
     return $cache['res'];
 
   }
 
-  echo '<br />no cache exists for ' . $hash;
+  //echo '<br />no cache exists for ' . $hash;
   return false;
 
 }
