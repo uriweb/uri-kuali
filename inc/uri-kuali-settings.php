@@ -91,7 +91,8 @@ function uri_kuali_settings_section( $args ) {
  * @see https://developer.wordpress.org/reference/functions/add_options_page/
  */
 function uri_kuali_settings_page() {
-	add_options_page(
+	add_submenu_page(
+		'settings.php',
 		__( 'URI Kuali Settings', 'uri' ),
 		__( 'URI Kuali', 'uri' ),
 		'manage_options',
@@ -99,7 +100,7 @@ function uri_kuali_settings_page() {
 		'uri_kuali_settings_page_html'
 	);
 }
-add_action( 'admin_menu', 'uri_kuali_settings_page' );
+add_action( 'network_admin_menu', 'uri_kuali_settings_page' );
 
 
 
