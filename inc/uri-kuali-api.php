@@ -71,13 +71,13 @@ function uri_kuali_get_data( $url ) {
 
   // if we have a good cache, use it
   if ( $cache ) {
-    echo '<br />using cache for ' . uri_kuali_hash_string( $url );
+    //echo '<br />using cache for ' . uri_kuali_hash_string( $url );
     return $cache;
   }
 
   // otherwise, call the api, cache it, and return the data
-  echo '<br />no cache for ' . uri_kuali_hash_string( $url );
-  echo '<br />calling api...';
+  //echo '<br />no cache for ' . uri_kuali_hash_string( $url );
+  //echo '<br />calling api...';
   $data = uri_kuali_api_call( $url, uri_kuali_api_get_header() );
   uri_kuali_cache_update( $url, $data );
   return $data;
@@ -98,14 +98,24 @@ function uri_kuali_api_get_subject_data( $subject ) {
 
 }
 
+
+
 /**
  * Get the course list by subject id
  */
 function uri_kuali_api_get_courses( $id, $atts ) {
 
   $api_base = get_option( 'uri_kuali_url' );
-  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'];
 
+  /* Build URL for a list of courses if a course number isn't specified */
+  if (null === $atts['number']) {
+    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'];
+    return uri_kuali_get_data( $url );
+  }
+
+  /* If a course number is specified, build URL for single course */
+  else {
+  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'];
   return uri_kuali_get_data( $url );
-
+  }
 }

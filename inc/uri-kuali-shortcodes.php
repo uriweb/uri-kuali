@@ -15,6 +15,7 @@
  	// default attributes
  	$attributes = shortcode_atts( array(
  		'subject' => 'AAF',
+    'number' => NULL,
  		'before' => '<div class="uri-kuali">',
  		'after' => '</div>',
     'limit' => 200,
