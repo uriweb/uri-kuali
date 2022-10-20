@@ -236,9 +236,9 @@ add_action('network_admin_edit_save', 'save_options');
 function save_options() {
 
 
-	update_site_option(  'uri-kuali-field-url', $_POST['uri-kuali-field-url'] );
-	update_site_option(  'uri-kuali-field-client-id', $_POST['uri-kuali-field-client-id'] );
-	update_site_option(  'uri-kuali-field-recency', $_POST['uri-kuali-field-recency'] );
+	update_site_option( 'uri_kuali_url', $_POST['uri_kuali_url'] );
+	update_site_option( 'uri_kuali_client_id', $_POST['uri_kuali_client_id'] );
+	update_site_option( 'uri_kuali_recency', $_POST['uri_kuali_recency'] );
 
 	wp_redirect( add_query_arg( array(
 		'page' => 'uri-kuali-settings',
