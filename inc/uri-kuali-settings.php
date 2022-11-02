@@ -75,6 +75,8 @@ function uri_kuali_register_settings() {
 }
 add_action( 'admin_init', 'uri_kuali_register_settings' );
 
+
+
 /**
  * Callback for a settings section
  * @param arr $args has the following keys defined: title, id, callback.
@@ -88,14 +90,14 @@ function uri_kuali_settings_section( $args ) {
 
 /**
  * Add the settings page to the settings menu
- * @see https://developer.wordpress.org/reference/functions/add_options_page/
+ * @see https://developer.wordpress.org/reference/functions/add_submenu_page/
  */
 function uri_kuali_settings_page() {
 	add_submenu_page(
 		'settings.php',
 		__( 'URI Kuali Settings', 'uri' ),
 		__( 'URI Kuali', 'uri' ),
-		'manage_options',
+		'manage_network_options',
 		'uri-kuali-settings',
 		'uri_kuali_settings_page_html'
 	);
@@ -121,7 +123,7 @@ function uri_kuali_settings_page_html() {
 	?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<form action="options.php" method="post">
+			<form action="edit.php?action=save" method="post">
 				<?php
 					// output security fields for the registered setting "uri_today"
 					settings_fields( 'uri_kuali' );
@@ -171,7 +173,7 @@ function uri_kuali_santize_url( $value ) {
  */
 function uri_kuali_url_field( $args ) {
 	// get the value of the setting we've registered with register_setting()
-	$setting = get_option( 'uri_kuali_url' );
+	$setting = get_site_option( 'uri_kuali_url' );
 	// output the field
 	?>
 		<input type="text" class="regular-text" aria-describedby="uri-kuali-field-url" name="uri_kuali_url" id="uri-kuali-field-url" value="<?php print ($setting!==FALSE) ? esc_attr($setting) : ''; ?>">
@@ -193,7 +195,7 @@ function uri_kuali_url_field( $args ) {
  */
 function uri_kuali_client_id_field( $args ) {
 	// get the value of the setting we've registered with register_setting()
-	$setting = get_option( 'uri_kuali_client_id' );
+	$setting = get_site_option( 'uri_kuali_client_id' );
 	// output the field
 	?>
 		<input type="text" class="regular-text" aria-describedby="uri-kuali-field-client-id" name="uri_kuali_client_id" id="uri-kuali-field-client-id" value="<?php print ($setting!==FALSE) ? esc_attr($setting) : ''; ?>">
@@ -213,7 +215,7 @@ function uri_kuali_client_id_field( $args ) {
  */
 function uri_kuali_recency_field( $args ) {
 	// get the value of the setting we've registered with register_setting()
-	$setting = get_option( 'uri_kuali_recency' );
+	$setting = get_site_option( 'uri_kuali_recency' );
 	// output the field
 	?>
 		<input type="text" class="regular-text" aria-describedby="uri-kuali-field-recency" name="uri_kuali_recency" id="uri-kuali-field-recency" value="<?php print ($setting!==FALSE) ? esc_attr($setting) : ''; ?>">
@@ -223,4 +225,38 @@ function uri_kuali_recency_field( $args ) {
 			?>
 		</p>
 	<?php
+}
+
+
+/**
+* Save the Settings
+*/
+
+add_action('network_admin_edit_save', 'save_options');
+function save_options() {
+
+
+	update_site_option( 'uri_kuali_url', $_POST['uri_kuali_url'] );
+	update_site_option( 'uri_kuali_client_id', $_POST['uri_kuali_client_id'] );
+	update_site_option( 'uri_kuali_recency', $_POST['uri_kuali_recency'] );
+
+	wp_redirect( add_query_arg( array(
+		'page' => 'uri-kuali-settings',
+		'updated' => true ), network_admin_url('settings.php')
+	));
+	exit;
+}
+
+/**
+ * Add admin notice
+ */
+
+ add_action( 'network_admin_notices', 'kuali_custom_notices' );
+
+function kuali_custom_notices(){
+
+	if( isset($_GET['page']) && $_GET['page'] == 'uri-kuali-settings' && isset( $_GET['updated'] )  ) {
+		echo '<div id="message" class="updated notice is-dismissible"><p>Settings updated.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
+	}
+
 }

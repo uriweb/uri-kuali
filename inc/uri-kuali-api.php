@@ -11,7 +11,7 @@
  */
 function uri_kuali_api_get_header() {
 
-  $client_id = get_option( 'uri_kuali_client_id' );
+  $client_id = get_site_option( 'uri_kuali_client_id' );
 	$user_agent = 'URI WordPress Plugin; ' . get_bloginfo('url'); // So the api can easily figure out who we are
 
   if ( ! empty ( $client_id ) ) {
@@ -89,7 +89,7 @@ function uri_kuali_get_data( $url ) {
  */
 function uri_kuali_api_get_subject_data( $subject ) {
 
-  $api_base = get_option( 'uri_kuali_url' );
+  $api_base = get_site_option( 'uri_kuali_url' );
 
   // @todo $subject should be sanitized somehow
   $url = $api_base . '/cm/options/types/subjectcodes?name=' . $subject;
@@ -105,7 +105,7 @@ function uri_kuali_api_get_subject_data( $subject ) {
  */
 function uri_kuali_api_get_courses( $id, $atts ) {
 
-  $api_base = get_option( 'uri_kuali_url' );
+  $api_base = get_site_option( 'uri_kuali_url' );
 
   /* Build URL for a list of courses if a course number isn't specified */
   if (null === $atts['number']) {
