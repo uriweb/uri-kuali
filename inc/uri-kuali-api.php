@@ -85,11 +85,24 @@ function uri_kuali_get_data( $url ) {
 }
 
 /**
+ * Get the api base URL and set a default
+ */
+function uri_kuali_get_api_base() {
+  $api_base = get_site_option( 'uri_kuali_url' );
+
+  if ( empty( $api_base ) ) {
+    $api_base = 'https://uri.kuali.co/api';
+  }
+
+  return $api_base;
+}
+
+/**
  * Get course subject data by three-letter course code
  */
 function uri_kuali_api_get_subject_data( $subject ) {
 
-  $api_base = get_site_option( 'uri_kuali_url' );
+  $api_base = uri_kuali_get_api_base();
 
   // @todo $subject should be sanitized somehow
   $url = $api_base . '/cm/options/types/subjectcodes?name=' . $subject;
@@ -105,7 +118,7 @@ function uri_kuali_api_get_subject_data( $subject ) {
  */
 function uri_kuali_api_get_courses( $id, $atts ) {
 
-  $api_base = get_site_option( 'uri_kuali_url' );
+  $api_base = uri_kuali_get_api_base();
 
   /* Build URL for a list of courses if a course number isn't specified */
   if (null === $atts['number']) {
