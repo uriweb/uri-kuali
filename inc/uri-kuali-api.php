@@ -122,13 +122,13 @@ function uri_kuali_api_get_courses( $id, $atts ) {
 
   /* Build URL for a list of courses if a course number isn't specified */
   if (null === $atts['number']) {
-    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'];
+    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&teachingMethod=Face to Face';
     return uri_kuali_get_data( $url );
   }
 
   /* If a course number is specified, build URL for single course */
   else {
-  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'];
+  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&teachingMethod=Face to Face';
   return uri_kuali_get_data( $url );
   }
 }
