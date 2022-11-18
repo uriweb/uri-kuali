@@ -120,15 +120,23 @@ function uri_kuali_api_get_courses( $id, $atts ) {
 
   $api_base = uri_kuali_get_api_base();
 
+  /* Define teaching method variable */
+  if ($atts['online'] === FALSE) {
+    $teachingMethod = 'Face to Face';
+  }
+  else {
+    $teachingMethod = 'online';
+  }
+
   /* Build URL for a list of courses if a course number isn't specified */
   if (null === $atts['number']) {
-    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&teachingMethod=Face to Face';
+    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&teachingMethod=' . $teachingMethod;
     return uri_kuali_get_data( $url );
   }
 
   /* If a course number is specified, build URL for single course */
   else {
-  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&teachingMethod=Face to Face';
+  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&teachingMethod=' . $teachingMethod;
   return uri_kuali_get_data( $url );
   }
 }
