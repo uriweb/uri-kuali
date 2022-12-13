@@ -80,7 +80,7 @@ function uri_kuali_hash_string ( $string ) {
  */
 function uri_kuali_cache_is_expired( $date ) {
 
-	$recency = get_option( 'uri_kuali_recency', '1 day' );
+	$recency = get_site_option( 'uri_kuali_recency', '1 day' );
 	$expiry = strtotime( '-' . $recency, strtotime('now') );
 
 	return ( $date < $expiry );
