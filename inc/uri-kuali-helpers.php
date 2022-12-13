@@ -29,7 +29,10 @@ function uri_kuali_render_course_list( $courses, $attributes ) {
 	print $attributes['before'];
 
 	foreach( $courses as $course ) {
-		include $template;
+    //var_dump($course);
+    //if ( null === $course->dateStart || 'online' == $course->teachingMethod ) {
+		  include $template;
+    //}
 	}
 
 	print $attributes['after'];
