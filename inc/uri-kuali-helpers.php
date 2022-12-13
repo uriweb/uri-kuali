@@ -29,7 +29,10 @@ function uri_kuali_render_course_list( $courses, $attributes ) {
 	print $attributes['before'];
 
 	foreach( $courses as $course ) {
-		include $template;
+    //var_dump($course);
+    //if ( null === $course->dateStart || 'online' == $course->teachingMethod ) {
+		  include $template;
+    //}
 	}
 
 	print $attributes['after'];
@@ -80,7 +83,7 @@ function uri_kuali_hash_string ( $string ) {
  */
 function uri_kuali_cache_is_expired( $date ) {
 
-	$recency = get_option( 'uri_kuali_recency', '1 day' );
+	$recency = get_site_option( 'uri_kuali_recency', '1 day' );
 	$expiry = strtotime( '-' . $recency, strtotime('now') );
 
 	return ( $date < $expiry );
