@@ -2,6 +2,12 @@
 
 A tool that makes it easy to embed dynamic course data from Kuali.
 
+## What's new in v1.1
+
+- Provides a default API url in the event that one is not supplied in the network settings
+- Limits pulled courses to ones with active status
+- Fixes an issue that caused the cache recency to not be honored
+
 ## Example Usage
 
 ``[courses subject="COM"]``
