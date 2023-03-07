@@ -2,11 +2,9 @@
 
 A tool that makes it easy to embed dynamic course data from Kuali.
 
-## What's new in v1.1
+## What's new in v1.2.0
 
-- Provides a default API url in the event that one is not supplied in the network settings
-- Limits pulled courses to ones with active status
-- Fixes an issue that caused the cache recency to not be honored
+- Adds a composer.json file
 
 ## Example Usage
 
@@ -18,6 +16,6 @@ __Contributors:__ [bjcfuller](https://github.com/bjcfuller), [alexandragauss](ht
 __Tags:__ plugins, shortcodes  
 __Requires at least:__ 5.0  
 __Tested up to:__ 6.0.2  
-__Stable tag:__ 1.1  
+__Stable tag:__ 1.2.0  
 __License:__ GPL-3.0  
 __Licence URI:__ https://www.gnu.org/licenses/gpl-3.0.html
