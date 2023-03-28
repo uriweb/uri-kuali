@@ -2,9 +2,9 @@
 
 A tool that makes it easy to embed dynamic course data from Kuali.
 
-## What's new in v1.2.0
+## What's new in v1.2.1
 
-- Adds a composer.json file
+- Changes the default course return limit to 100, which matches the Kuali API maximum.
 
 ## Example Usage
 
