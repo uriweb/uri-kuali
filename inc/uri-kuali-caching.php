@@ -35,6 +35,9 @@ function uri_kuali_cache_update( $url, $kuali_data ) {
 function uri_kuali_cache_retrieve( $url ) {
 
   $data = get_option( 'uri_kuali_cache' );
+  if ( empty ( $data ) ) {
+    $data = array();
+  }
   $hash = uri_kuali_hash_string( $url );
 
   //var_dump($data);
