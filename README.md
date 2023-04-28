@@ -4,7 +4,7 @@ A tool that makes it easy to embed dynamic course data from Kuali.
 
 ## What's new in v1.2.1
 
-- Changes the default course return limit to 100, which matches the Kuali API maximum.
+- Changes the default course return limit to 100 courses, which matches the Kuali API maximum.
 
 ## Example Usage
 
