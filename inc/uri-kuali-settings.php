@@ -31,7 +31,7 @@ function uri_kuali_register_settings() {
 
 	add_settings_section(
 		'uri_kuali_settings',
-		__( 'URI Kuali Settings', 'uri' ),
+		__( 'Kuali API Settings', 'uri' ),
 		'uri_kuali_settings_section',
 		'uri_kuali'
 	);
@@ -191,7 +191,6 @@ function uri_kuali_url_field( $args ) {
  * Field callback
  * outputs the field
  * @see add_settings_field()
- * @see uri_today_field_domain_callback()
  */
 function uri_kuali_client_id_field( $args ) {
 	// get the value of the setting we've registered with register_setting()
@@ -232,9 +231,8 @@ function uri_kuali_recency_field( $args ) {
 * Save the Settings
 */
 
-add_action('network_admin_edit_save', 'save_options');
-function save_options() {
-
+add_action('network_admin_edit_save', 'uri_kuali_save_options');
+function uri_kuali_save_options() {
 
 	update_site_option( 'uri_kuali_url', $_POST['uri_kuali_url'] );
 	update_site_option( 'uri_kuali_client_id', $_POST['uri_kuali_client_id'] );
@@ -251,9 +249,9 @@ function save_options() {
  * Add admin notice
  */
 
- add_action( 'network_admin_notices', 'kuali_custom_notices' );
+ add_action( 'network_admin_notices', 'uri_kuali_custom_notices' );
 
-function kuali_custom_notices(){
+function uri_kuali_custom_notices(){
 
 	if( isset($_GET['page']) && $_GET['page'] == 'uri-kuali-settings' && isset( $_GET['updated'] )  ) {
 		echo '<div id="message" class="updated notice is-dismissible"><p>Settings updated.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
