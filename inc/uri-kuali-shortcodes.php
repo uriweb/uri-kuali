@@ -19,6 +19,7 @@
  		'before' => '<div class="uri-kuali">',
  		'after' => '</div>',
     'limit' => 100, // 100 is the maximum Kuali will return with a single query.  For more than that, @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-query
+    'skip' => NULL,
  	), $attributes, $shortcode );
 
  	$subject_data = uri_kuali_api_get_subject_data( $attributes['subject'] );

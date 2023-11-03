@@ -122,7 +122,7 @@ function uri_kuali_api_get_courses( $id, $atts ) {
 
   /* Build URL for a list of courses if a course number isn't specified */
   if (null === $atts['number']) {
-    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&status=active';
+    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&status=active&skip=' .$atts['skip'];
     return uri_kuali_get_data( $url );
   }
 
