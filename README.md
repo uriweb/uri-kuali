@@ -2,9 +2,9 @@
 
 A tool that makes it easy to embed dynamic course data from Kuali.
 
-## What's new in v1.2.1
+## What's new in v1.3.0
 
-- Changes the default course return limit to 100, which matches the Kuali API maximum.
+- Adds a skip capability attribute, which allows the plugin to call the next 100 course entries.
 
 ## Example Usage
 
@@ -16,6 +16,6 @@ __Contributors:__ [bjcfuller](https://github.com/bjcfuller), [alexandragauss](ht
 __Tags:__ plugins, shortcodes  
 __Requires at least:__ 5.0  
 __Tested up to:__ 6.0.2  
-__Stable tag:__ 1.2.1  
+__Stable tag:__ 1.3.0  
 __License:__ GPL-3.0  
 __Licence URI:__ https://www.gnu.org/licenses/gpl-3.0.html
