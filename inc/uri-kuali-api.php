@@ -78,9 +78,12 @@ function uri_kuali_get_data( $url ) {
   // otherwise, call the api, cache it, and return the data
   //echo '<br />no cache for ' . uri_kuali_hash_string( $url );
   //echo '<br />calling api...';
+
+  
   $data = uri_kuali_api_call( $url, uri_kuali_api_get_header() );
   uri_kuali_cache_update( $url, $data );
   return $data;
+ 
 
 }
 
@@ -119,11 +122,33 @@ function uri_kuali_api_get_subject_data( $subject ) {
 function uri_kuali_api_get_courses( $id, $atts ) {
 
   $api_base = uri_kuali_get_api_base();
+  /*
+    $url1 = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&status=active&skip=' .$atts['skip'];
+    $url2 = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=100';
+    $all_queries = array( $url1, $url2);
+    var_dump($all_queries);
 
-  /* Build URL for a list of courses if a course number isn't specified */
+    foreach ($all_queries as $url ) {
+      return uri_kuali_get_data( $url );
+    }
+
+    */
+  /* Build URL queries for a list of all courses in intervals of 100 if a course number isn't specified */
   if (null === $atts['number']) {
-    $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&status=active&skip=' .$atts['skip'];
-    return uri_kuali_get_data( $url );
+
+    $urls = array(
+      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=',
+      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=100',
+      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=200',
+    );
+    
+    $getdata1 = uri_kuali_get_data( $urls[0] );
+    $getdata2 = uri_kuali_get_data( $urls[1] );
+    $getdata3 = uri_kuali_get_data( $urls[2] );
+    
+    $course_list = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+
+    return $course_list;
   }
 
   /* If a course number is specified, build URL for single course */
