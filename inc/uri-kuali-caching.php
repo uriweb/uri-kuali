@@ -39,7 +39,7 @@ function uri_kuali_cache_retrieve( $url ) {
 
   //var_dump($data);
 
-  if ( array_key_exists( $hash, $data ) ) {
+  if (is_array( $data ) &&  array_key_exists( $hash, $data ) ) {
 
     //echo '<br />cache exists for ' . $hash;
     $cache = $data[$hash];
