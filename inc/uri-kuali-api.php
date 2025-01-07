@@ -153,10 +153,12 @@ function uri_kuali_api_get_courses( $id, $atts ) {
     // @debug Dump the results
     //var_dump($course_list->res[0]);
 
-    // @debug This should give us all versions of the first course.... but it does not return anything.
+    // @debug This should give us all versions of the first course.
     // @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-versions-get
-    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $course_list->res[0]->id . '/versions', uri_kuali_api_get_header() );
-    var_dump(json_encode($versions));
+    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $course_list->res[0]->pid . '/versions', uri_kuali_api_get_header() );
+
+    // @debug Dump the most recent version of the first course.
+    var_dump(json_encode($versions[0]));
 
     return $course_list;
   }
