@@ -136,10 +136,12 @@ function uri_kuali_api_get_courses( $id, $atts ) {
   /* Build URL queries for a list of all courses in intervals of 100 if a course number isn't specified */
   if (null === $atts['number']) {
 
+    $url_base = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&fields=number,title,description,_id,pid';
+
     $urls = array(
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=',
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=100',
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=200',
+      $url_base . '&skip=',
+      $url_base . '&skip=100',
+      $url_base . '&skip=200',
     );
     
     $getdata1 = uri_kuali_get_data( $urls[0] );
@@ -147,6 +149,14 @@ function uri_kuali_api_get_courses( $id, $atts ) {
     $getdata3 = uri_kuali_get_data( $urls[2] );
     
     $course_list = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+
+    // @debug Dump the results
+    //var_dump($course_list->res[0]);
+
+    // @debug This should give us all versions of the first course.... but it does not return anything.
+    // @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-versions-get
+    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $course_list->res[0]->id . '/versions', uri_kuali_api_get_header() );
+    var_dump(json_encode($versions));
 
     return $course_list;
   }
