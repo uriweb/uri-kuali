@@ -114,6 +114,33 @@ function uri_kuali_api_get_subject_data( $subject ) {
 
 }
 
+/**
+ * Return only the newest course versions from a list of all active courses
+ */
+function uri_kuali_api_return_newest_course_versions( $res, $api_base ) {
+
+  $pids = array();
+  $course_list = array();
+
+  foreach( $res as $course ) {
+
+    $pid = $course->pid;
+
+    // If we've already pushed a course with this PID, we know we already have the latest version
+    if ( in_array( $pid, $pids ) ) {
+      continue;
+    }
+
+    // Otherwise, let's log the PID and push the course to the course list
+    array_push( $pids, $pid );
+    array_push( $course_list, $course );
+
+  }
+
+  return $course_list;
+
+}
+
 
 
 /**
@@ -136,17 +163,24 @@ function uri_kuali_api_get_courses( $id, $atts ) {
   /* Build URL queries for a list of all courses in intervals of 100 if a course number isn't specified */
   if (null === $atts['number']) {
 
+    $url_base = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&fields=number,title,description,_id,pid';
+
     $urls = array(
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=',
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=100',
-      $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=200',
+      $url_base . '&skip=',
+      $url_base . '&skip=100',
+      $url_base . '&skip=200',
     );
     
     $getdata1 = uri_kuali_get_data( $urls[0] );
     $getdata2 = uri_kuali_get_data( $urls[1] );
     $getdata3 = uri_kuali_get_data( $urls[2] );
     
-    $course_list = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+    $data = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+
+    // @todo Contend with caching for this part
+    $course_list = uri_kuali_api_return_newest_course_versions( $data->res, $api_base );
+
+    //var_dump($course_list[0]);
 
     return $course_list;
   }
