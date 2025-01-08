@@ -115,9 +115,9 @@ function uri_kuali_api_get_subject_data( $subject ) {
 }
 
 /**
- * Get newest versions of each course
+ * Return only the newest course versions from a list of all active courses
  */
-function uri_kuali_api_get_newest_course_versions( $res, $api_base ) {
+function uri_kuali_api_return_newest_course_versions( $res, $api_base ) {
 
   $pids = array();
   $course_list = array();
@@ -126,18 +126,14 @@ function uri_kuali_api_get_newest_course_versions( $res, $api_base ) {
 
     $pid = $course->pid;
 
+    // If we've already pushed a course with this PID, we know we already have the latest version
     if ( in_array( $pid, $pids ) ) {
       continue;
     }
 
-    // Collect the PIDs we've checked
+    // Otherwise, let's log the PID and push the course to the course list
     array_push( $pids, $pid );
-
-    // Get the newest version of the course
-    // @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-versions-get
-    // @todo contend with caching
-    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $pid . '/versions', uri_kuali_api_get_header() );
-    array_push( $course_list, $versions[0] );
+    array_push( $course_list, $course );
 
   }
 
@@ -182,7 +178,7 @@ function uri_kuali_api_get_courses( $id, $atts ) {
     $data = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
 
     // @todo Contend with caching for this part
-    $course_list = uri_kuali_api_get_newest_course_versions( $data->res, $api_base );
+    $course_list = uri_kuali_api_return_newest_course_versions( $data->res, $api_base );
 
     //var_dump($course_list[0]);
 
