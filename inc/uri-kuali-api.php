@@ -187,7 +187,9 @@ function uri_kuali_api_get_courses( $id, $atts ) {
 
   /* If a course number is specified, build URL for single course */
   else {
-  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&status=active';
-  return uri_kuali_get_data( $url );
+  $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&status=active&fields=number,title,description,_id,pid';
+  $getdata = uri_kuali_get_data($url);
+  $course_list = uri_kuali_api_return_newest_course_versions( $getdata->res, $url );
+  return $course_list;
   }
 }
