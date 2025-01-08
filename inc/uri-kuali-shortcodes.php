@@ -31,7 +31,7 @@
 
   $course_list = uri_kuali_api_get_courses( $subject_id, $attributes );
 
-  $output = uri_kuali_render_course_list( $course_list->res, $attributes );
+  $output = uri_kuali_render_course_list( $course_list, $attributes );
 
   //var_dump( $course_list->res );
 
