@@ -114,6 +114,37 @@ function uri_kuali_api_get_subject_data( $subject ) {
 
 }
 
+/**
+ * Get newest versions of each course
+ */
+function uri_kuali_api_get_newest_course_versions( $res, $api_base ) {
+
+  $pids = array();
+  $course_list = array();
+
+  foreach( $res as $course ) {
+
+    $pid = $course->pid;
+
+    if ( in_array( $pid, $pids ) ) {
+      continue;
+    }
+
+    // Collect the PIDs we've checked
+    array_push( $pids, $pid );
+
+    // Get the newest version of the course
+    // @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-versions-get
+    // @todo contend with caching
+    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $pid . '/versions', uri_kuali_api_get_header() );
+    array_push( $course_list, $versions[0] );
+
+  }
+
+  return $course_list;
+
+}
+
 
 
 /**
@@ -148,17 +179,12 @@ function uri_kuali_api_get_courses( $id, $atts ) {
     $getdata2 = uri_kuali_get_data( $urls[1] );
     $getdata3 = uri_kuali_get_data( $urls[2] );
     
-    $course_list = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+    $data = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
 
-    // @debug Dump the results
-    //var_dump($course_list->res[0]);
+    // @todo Contend with caching for this part
+    $course_list = uri_kuali_api_get_newest_course_versions( $data->res, $api_base );
 
-    // @debug This should give us all versions of the first course.
-    // @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-versions-get
-    $versions = uri_kuali_api_call( $api_base . '/cm/courses/' . $course_list->res[0]->pid . '/versions', uri_kuali_api_get_header() );
-
-    // @debug Dump the most recent version of the first course.
-    var_dump(json_encode($versions[0]));
+    //var_dump($course_list[0]);
 
     return $course_list;
   }
