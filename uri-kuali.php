@@ -3,7 +3,7 @@
 Plugin Name: URI Kuali
 Plugin URI: https://www.uri.edu
 Description: Implements a shortcode to display course data from Kuali's API. [courses subject="AAF"]
-Version: 1.4.0
+Version: 1.5.0
 Author: Brandon Fuller
 Author: Alexandra Gauss
 Author URI:
