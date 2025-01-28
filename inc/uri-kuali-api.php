@@ -191,9 +191,12 @@ function uri_kuali_api_return_newest_course_versions($res, $api_base)
   $course_list = array();
   $used_pids = array();
 
+
+
   foreach ($res as $course) {
 
     $pid = $course->pid;
+
 
     //if pid is in the array of duplicated pids, then call the api to get the lastest active version, log it in $used_pids array, and push it to the course_list 
 
@@ -213,6 +216,7 @@ function uri_kuali_api_return_newest_course_versions($res, $api_base)
       array_push($course_list, $course);
     }
   }
+
   return $course_list;
 }
 
@@ -264,7 +268,7 @@ function uri_kuali_api_get_courses($id, $atts)
   /* If a course number is specified, build URL for single course */ else {
     $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&status=active&fields=number,title,description,_id,pid';
     $getdata = uri_kuali_get_data($url);
-    $course_list = uri_kuali_api_return_newest_course_versions($getdata->res, $url);
+    $course_list = uri_kuali_api_return_newest_course_versions($getdata->res, $api_base);
     return $course_list;
   }
 }
