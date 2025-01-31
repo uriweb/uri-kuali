@@ -183,6 +183,9 @@ function uri_kuali_get_pids($res)
   return array($duplicate_pids, $unique_pids);
 }
 
+/**
+ * If duplicate courses, then call the API to get the latest active
+ */
 
 function uri_kuali_api_return_newest_course_versions($res, $api_base)
 {
@@ -220,6 +223,18 @@ function uri_kuali_api_return_newest_course_versions($res, $api_base)
   return $course_list;
 }
 
+
+/**
+ * Exclude any undesirable courses
+ */
+function uri_kuali_exclude_courses($course_list, $exclude_courses)
+{
+  $filter_courses = array_filter($course_list, function ($course) use ($exclude_courses) {
+    return !in_array((int)$course->number, $exclude_courses);
+  });
+  $course_list = array_values($filter_courses);
+  return $course_list;
+}
 
 
 /**
@@ -260,12 +275,19 @@ function uri_kuali_api_get_courses($id, $atts)
     // @todo Contend with caching for this part
     $course_list = uri_kuali_api_return_newest_course_versions($data->res, $api_base);
 
-    //var_dump($course_list[0]);
+    //Check for any excluded courses
+    if ($atts['exclude']) {
+      // Turn excluded courses into an array
+      $exclude_courses = explode(", ", $atts['exclude']);
+      $course_list = uri_kuali_exclude_courses($course_list, $exclude_courses);
+    }
+
 
     return $course_list;
   }
 
-  /* If a course number is specified, build URL for single course */ else {
+  /* If a course number is specified, build URL for single course */
+  if ($atts['number']) {
     $url = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&number=' . $atts['number'] . '&status=active&fields=number,title,description,_id,pid';
     $getdata = uri_kuali_get_data($url);
     $course_list = uri_kuali_api_return_newest_course_versions($getdata->res, $api_base);
