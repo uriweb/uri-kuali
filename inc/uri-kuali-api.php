@@ -116,35 +116,6 @@ function uri_kuali_api_get_subject_data($subject)
   return uri_kuali_get_data($url);
 }
 
-/**
- * Return only the newest course versions from a list of all active courses
- */
-/*
-function uri_kuali_api_return_newest_course_versions( $res, $api_base ) {
-
-  $pids = array();
-  $course_list = array();
-
-  foreach( $res as $course ) {
-
-    $pid = $course->pid;
-
-    // If we've already pushed a course with this PID, we know we already have the latest version
-    if ( in_array( $pid, $pids ) ) {
-      continue;
-    }
-
-    // Otherwise, let's log the PID and push the course to the course list
-    array_push( $pids, $pid );
-    array_push( $course_list, $course );
-
-  }
-
-  return $course_list;
-
-}
-  */
-
 
 /**
  * Find duplicate pids in the course list
@@ -244,17 +215,6 @@ function uri_kuali_api_get_courses($id, $atts)
 {
 
   $api_base = uri_kuali_get_api_base();
-  /*
-    $url1 = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=' . $atts['limit'] . '&status=active&skip=' .$atts['skip'];
-    $url2 = $api_base . '/cm/courses/queryAll?subjectCode=' . $id . '&sort=number&limit=100&status=active&skip=100';
-    $all_queries = array( $url1, $url2);
-    var_dump($all_queries);
-
-    foreach ($all_queries as $url ) {
-      return uri_kuali_get_data( $url );
-    }
-
-    */
   /* Build URL queries for a list of all courses in intervals of 100 if a course number isn't specified */
   if (null === $atts['number']) {
 
