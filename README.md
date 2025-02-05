@@ -2,9 +2,11 @@
 
 A tool that makes it easy to embed dynamic course data from Kuali.
 
-## What's new in v1.5.1
+## What's new in v1.6.0
 
-- Displays the first version of each course, removing duplicates. Applies to complete course lists as well as when only a single course is called.  
+- Gets the latest active course if a course number has duplicates 
+- Adds an exclude parameter in the shortcode.
+
 
 ## Example Usage
 
@@ -16,6 +18,6 @@ __Contributors:__ [bjcfuller](https://github.com/bjcfuller), [alexandragauss](ht
 __Tags:__ plugins, shortcodes  
 __Requires at least:__ 5.0  
 __Tested up to:__ 6.7.1  
-__Stable tag:__ 1.5.1  
+__Stable tag:__ 1.6.0  
 __License:__ GPL-3.0  
 __Licence URI:__ https://www.gnu.org/licenses/gpl-3.0.html

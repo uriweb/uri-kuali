@@ -16,6 +16,7 @@
  	$attributes = shortcode_atts( array(
  		'subject' => 'AAF',
     'number' => NULL,
+    'exclude' => NULL,
  		'before' => '<div class="uri-kuali">',
  		'after' => '</div>',
     //'limit' => 100, // 100 is the maximum Kuali will return with a single query.  For more than that, @see https://developers.kuali.co/#cm-courses,-programs,-experiences,-and-specializations-query
