@@ -224,13 +224,15 @@ function uri_kuali_api_get_courses($id, $atts)
       $url_base . '&skip=',
       $url_base . '&skip=100',
       $url_base . '&skip=200',
+      $url_base . '&skip=300',
     );
 
     $getdata1 = uri_kuali_get_data($urls[0]);
     $getdata2 = uri_kuali_get_data($urls[1]);
     $getdata3 = uri_kuali_get_data($urls[2]);
+    $getdata4 = uri_kuali_get_data($urls[3]);
 
-    $data = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3);
+    $data = (object)array_merge_recursive((array)$getdata1, (array)$getdata2, (array)$getdata3, (array)$getdata4);
 
     // @todo Contend with caching for this part
     $course_list = uri_kuali_api_return_newest_course_versions($data->res, $api_base);
