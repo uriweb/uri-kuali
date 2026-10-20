@@ -12,6 +12,22 @@ A tool that makes it easy to embed dynamic course data from Kuali.
 
 ``[courses subject="COM"]``
 
+## Parameters
+
+### Subject
+The course subject code. \
+Displays the first 400 courses.
+
+### Number 
+default: null \
+Displays a specific course. \
+Ex. ```[courses subject="COM" number="201"]```
+
+### Exclude
+default: null \
+Excludes a course by number. For a list of courses, separate numbers with a comma. \
+Ex. ```[courses subject="COM" exclude="201, 220"]```
+
 ## Plugin Details
 
 __Contributors:__ [bjcfuller](https://github.com/bjcfuller), [alexandragauss](https://github.com/alexandragauss)  
